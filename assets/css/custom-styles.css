@@ -1,0 +1,263 @@
+/* ============================================================
+   Dracula Theme — 0xEct0.github.io
+   Palette: https://draculatheme.com/contribute
+   ============================================================ */
+
+/* Dracula colours (reference)
+   Background:    #282a36
+   Current Line:  #44475a
+   Foreground:    #f8f8f2
+   Comment:       #6272a4
+   Cyan:          #8be9fd
+   Green:         #50fa7b
+   Orange:        #ffb86c
+   Pink:          #ff79c6
+   Purple:        #bd93f9
+   Red:           #ff5555
+   Yellow:        #f1fa8c
+*/
+
+/* --- Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Share+Tech+Mono&display=swap');
+
+/* --- Base --- */
+body {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  background-color: #282a36;
+  color: #f8f8f2;
+}
+
+/* Subtle scanline overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(189, 147, 249, 0.012) 2px,
+    rgba(189, 147, 249, 0.012) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- Navbar --- */
+.navbar {
+  border-bottom: 1px solid #bd93f9 !important;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+}
+
+.navbar-brand {
+  color: #bd93f9 !important;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.navbar-brand::before {
+  content: '> ';
+  color: #ff79c6;
+}
+
+.nav-link {
+  color: #f8f8f2 !important;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #bd93f9 !important;
+}
+
+/* --- Headings --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: #f8f8f2;
+}
+
+h1::before { content: '# '; color: #f1fa8c; }
+h2::before { content: '## '; color: #f1fa8c; opacity: 0.85; }
+h3::before { content: '### '; color: #f1fa8c; opacity: 0.65; }
+
+/* --- Post title (large heading on post pages — don't double prefix) --- */
+.page-heading h1::before,
+.post-title::before {
+  content: none;
+}
+
+/* --- Links --- */
+a {
+  color: #bd93f9;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ff79c6;
+  text-decoration: none;
+}
+
+/* --- Code blocks --- */
+pre {
+  background-color: #21222c !important;
+  border: 1px solid #44475a;
+  border-left: 3px solid #bd93f9;
+  border-radius: 4px;
+  padding: 1rem 1.2rem;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.88rem;
+  overflow-x: auto;
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.88em;
+  background-color: #44475a;
+  border: 1px solid #6272a4;
+  border-radius: 3px;
+  padding: 0.15em 0.4em;
+  color: #50fa7b;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #f8f8f2;
+}
+
+/* --- Inline code in headings --- */
+h1 code, h2 code, h3 code { font-size: 0.9em; }
+
+/* --- Post cards / feed --- */
+.post-preview {
+  border: 1px solid #44475a;
+  border-left: 3px solid #bd93f9;
+  background-color: #21222c;
+  border-radius: 4px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-preview:hover {
+  border-left-color: #ff79c6;
+  box-shadow: 0 0 12px rgba(189, 147, 249, 0.2);
+}
+
+.post-preview a.post-title {
+  color: #f8f8f2;
+  font-size: 1.3rem;
+}
+
+.post-preview a.post-title:hover {
+  color: #bd93f9;
+}
+
+/* --- Post meta (date, tags) --- */
+.post-meta {
+  color: #6272a4;
+  font-size: 0.82rem;
+}
+
+/* --- Tags --- */
+.blog-tags a,
+.post-preview .blog-tags a {
+  background-color: #383a4a;
+  color: #8be9fd;
+  border: 1px solid #6272a4;
+  border-radius: 3px;
+  padding: 0.1em 0.5em;
+  font-size: 0.78rem;
+  margin-right: 0.3rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.blog-tags a:hover {
+  background-color: #bd93f9;
+  color: #282a36;
+  border-color: #bd93f9;
+}
+
+/* --- Dividers --- */
+hr {
+  border-color: #44475a;
+}
+
+/* --- Footer --- */
+footer {
+  border-top: 1px solid #bd93f9 !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+}
+
+/* --- Blockquotes --- */
+blockquote {
+  border-left: 4px solid #bd93f9;
+  background-color: #21222c;
+  color: #6272a4;
+  padding: 0.8rem 1.2rem;
+  font-style: normal;
+}
+
+/* --- Tables --- */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: #21222c;
+  color: #bd93f9;
+  border: 1px solid #44475a;
+  padding: 0.5rem 0.8rem;
+  text-align: left;
+}
+
+td {
+  border: 1px solid #44475a;
+  padding: 0.5rem 0.8rem;
+}
+
+tr:nth-child(even) td {
+  background-color: #21222c;
+}
+
+/* --- Search box --- */
+#nav-search-input {
+  background-color: #44475a !important;
+  color: #f8f8f2 !important;
+  border: 1px solid #6272a4 !important;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+#nav-search-input:focus {
+  border-color: #bd93f9 !important;
+  box-shadow: 0 0 0 2px rgba(189, 147, 249, 0.25) !important;
+  outline: none;
+}
+
+/* --- Wider content column on desktop --- */
+@media (min-width: 1200px) {
+  .col-xl-8 {
+    flex: 0 0 83.333333%;
+    max-width: 83.333333%;
+  }
+  .offset-xl-2 {
+    margin-left: 8.333333%;
+  }
+}
+
+/* --- Scrollbar (Webkit) --- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #21222c; }
+::-webkit-scrollbar-thumb { background: #44475a; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #bd93f9; }
+
+/* --- Selection highlight --- */
+::selection {
+  background: rgba(189, 147, 249, 0.35);
+  color: #f8f8f2;
+}
