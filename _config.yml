@@ -20,8 +20,6 @@ author: 0xEct0
 ###############################################
 
 navbar-links:
-  About: "about"
-  Post Tags: "tags"
   # Resources:
   #   - Beautiful Jekyll: "https://beautifuljekyll.com"
   #   - Learn markdown: "https://www.markdowntutorial.com/"
