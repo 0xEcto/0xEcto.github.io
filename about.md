@@ -11,7 +11,7 @@ subtitle:
 - General information security things
 
 ### whoami
-I have a MS in Cybersecurity and currently have about three years of experiencing working as a Security Engineer on the Threat Detection/Reverse Engineering team. Specific interests in information security includes anything within red teaming, tooling (software/implant) development, and malware reverse engineering. 
+I'm currently a Senior Security Engineer with five years of experience and an MS in Cybersecurity. Specific interests in information security includes anything within red teaming, tooling (software/implant) development, and malware reverse engineering. 
 
 Doing hands-on challenges and activities is my preferred method of learning so you can find write-ups for CTF challenges, HackTheBox challenges, and general lab activities in here. Doing write-ups helps me remember what I learn and it ensures that I fully understand the topic. 
 

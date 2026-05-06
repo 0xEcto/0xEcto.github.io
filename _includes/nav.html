@@ -31,11 +31,12 @@
         {%- endif -%}
       {%- endfor -%}
       {% if site.post_search %}
-        <li class="nav-item">
-          <a class="nav-link" id="nav-search-link" href="#" title="Search">
-            <span id="nav-search-text">Search</span>
+        <li class="nav-item nav-search-inline">
+          <div id="nav-search-wrapper">
             <span id="nav-search-icon" class="fa fa-search"></span>
-          </a>
+            <input type="text" id="nav-search-input" placeholder="Search by title or tag" autocomplete="off" spellcheck="false">
+            <ul id="search-results-container"></ul>
+          </div>
         </li>
       {%- endif -%}
     </ul>
