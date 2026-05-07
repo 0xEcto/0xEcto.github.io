@@ -2,7 +2,7 @@
 layout: post
 title: picoCTF 2021 - Transformation Walkthrough 
 subtitle: Walkthrough for picoCTF 2021 Reverse Engineering challenge Transformation
-tags: [reverse engineering]
+tags: [reverse engineering] [ctf]
 ---
 
 This challenge was a good refresher on some bit manipulation basics, more specifically with bit shifting and masking. You're given the encrypted text file and the encryption algorithm, and to find the flag you need to make a corresponding decryption function.
