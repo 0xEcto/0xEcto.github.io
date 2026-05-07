@@ -1,11 +1,11 @@
----
+﻿---
 layout: post
 title: Shellcoding a Reverse Shell from C
 subtitle: Developing position independent code to connect to a reverse shell
 tags: [red team, malware development]
 ---
 
-Final position independent reverse shell code, along with a python3 tool to automate most of the steps can be found here: [https://github.com/0xEct0/Shellcode-Generate/blob/main/code_templates/rev_shell.c](https://github.com/0xEct0/Shellcode-Generate/blob/main/code_templates/rev_shell.c)
+Final position independent reverse shell code, along with a python3 tool to automate most of the steps can be found here: [https://github.com/0xEcto/Shellcode-Generate/blob/main/code_templates/rev_shell.c](https://github.com/0xEcto/Shellcode-Generate/blob/main/code_templates/rev_shell.c)
 
 ## Intro
 
@@ -30,16 +30,16 @@ The process environment block (PEB) is a crucial data structure in the Windows o
 
 In the context of shellcode and position independent code (PIC), the PEB plays a significant role in ensuring that the shellcode can operate correctly regardless of its location in memory, By leveraging the PEB structure, position independent code can reliably locate necessary information without relying on hardcoded addresses. For instance, to resolve the addresses of kernel32.dll - a module with a lot of popular Windows APIs, user-mode code can traverse the PEB to find the absolute base address of the module.
 
-To start, we need two key WinAPI functions to help refactor “normal code” to position independent code:
+To start, we need two key WinAPI functions to help refactor â€œnormal codeâ€ to position independent code:
 
 - `LoadLibraryA` - Allows us to load other DLLs of interest
 - `GetProcAddress` - Allows us to get the address of other WinAPIs
 
-The first step is to develop a function to locate the address of `kernel32.dll` , a DLL which contains several Windows API functions that are needed throughout the code. To locate the address of a DLL by traversing the PEB the first step is to access the PEB itself which involves reading the GS register (for 64 bit architecture, FS for 32 bit), one can view the basic fields of the PEB structure by looking at the Microsoft Documentation website for PEB.  Within the PEB, the key field of interest is "Ldr" which points to a structure of type PEB_LDR_DATA. This structure includes both an "InMemoryOrderModuleList" and "InLoadOrderModuleList", the later is not included in the official Microsoft Documentation website so one would have to refer to a website such as Project Vergilius to view the full structure. Both module lists are doubly linked lists and one can traverse either linked list.
+The first step is to develop a function to locate the address of `kernel32.dll` , a DLL which contains several Windows API functions that are needed throughout the code. To locate the address of a DLL by traversing the PEB the first step is to access the PEB itself which involves reading the GS register (for 64 bit architecture, FS for 32 bit), one can view the basic fields of the PEB structure by looking at the Microsoft Documentation website for PEB.Â  Within the PEB, the key field of interest is "Ldr" which points to a structure of type PEB_LDR_DATA. This structure includes both an "InMemoryOrderModuleList" and "InLoadOrderModuleList", the later is not included in the official Microsoft Documentation website so one would have to refer to a website such as Project Vergilius to view the full structure. Both module lists are doubly linked lists and one can traverse either linked list.
 
-Once the head of a linked list of either module list has been acquired, the function should then traverse and examine each node's "LDR_DATA_TABLE_ENTRY" which represents an individual module. There are two fields of interests, the "BaseDllName" and the "DllBase." The function should compare the name of the DLL it is looking for to the "BaseDllName", and if it matches return the "DllBase", otherwise go to the next node of the linked list. Below contains a graphical reference of traversing the PEB to find a specific module’s base address along with the corresponding C code.
+Once the head of a linked list of either module list has been acquired, the function should then traverse and examine each node's "LDR_DATA_TABLE_ENTRY" which represents an individual module. There are two fields of interests, the "BaseDllName" and the "DllBase." The function should compare the name of the DLL it is looking for to the "BaseDllName", and if it matches return the "DllBase", otherwise go to the next node of the linked list. Below contains a graphical reference of traversing the PEB to find a specific moduleâ€™s base address along with the corresponding C code.
 
-![peb_module_lookup.png](https://raw.githubusercontent.com/0xEct0/0xEct0.github.io/main/images/peb_module_lookup.png)
+![peb_module_lookup.png](https://raw.githubusercontent.com/0xEcto/0xEcto.github.io/main/images/peb_module_lookup.png)
 
 ```c
 
@@ -258,19 +258,19 @@ inline LPVOID get_func_by_name( LPVOID module, char* function_name )
 
 ```
 
-![Untitled](https://raw.githubusercontent.com/0xEct0/0xEct0.github.io/main/images/export_table.png)
+![Untitled](https://raw.githubusercontent.com/0xEcto/0xEcto.github.io/main/images/export_table.png)
 
 Now that two key functions have been developed to:
 
 1. Get a modules address given the name
 2. Get a WinAPI address given the base module address and the WinAPI name
 
-The first key function can be used to get the address of `kernel32.dll`. Once that’s done, we can use the second key function to find two important WinAPI’s within `kernel32.dll`: 
+The first key function can be used to get the address of `kernel32.dll`. Once thatâ€™s done, we can use the second key function to find two important WinAPIâ€™s within `kernel32.dll`: 
 
 - `GetProcAddress`
 - `LoadLibraryA`
 
-These APIs will allow us to load other DLLs even if not loaded by the resulting executable and will allow us to get an WinAPI that resides within that module. The following code snippet below shows how we can obtain both WinAPI’s absolute address and use that to dynamically resolve it - essentially casting the address to our own WinAPI to use which will have the same function signatures as the original.
+These APIs will allow us to load other DLLs even if not loaded by the resulting executable and will allow us to get an WinAPI that resides within that module. The following code snippet below shows how we can obtain both WinAPIâ€™s absolute address and use that to dynamically resolve it - essentially casting the address to our own WinAPI to use which will have the same function signatures as the original.
 
  
 
@@ -311,7 +311,7 @@ if( NULL == _LoadLibraryA && NULL == _GetProcAddress)
 
 ## Position Independent Code for a Reverse Shell
 
-Once we’ve dynamically resolved those two functions, we can load other modules and API’s that reside within that module. For example, for reverse shell/network operations, we’ll use APIs within `ws2_32.dll` . Here’s how we can get the address of that DLL, along with `WSAStartup()` which is an API function needed for network operations.
+Once weâ€™ve dynamically resolved those two functions, we can load other modules and APIâ€™s that reside within that module. For example, for reverse shell/network operations, weâ€™ll use APIs within `ws2_32.dll` . Hereâ€™s how we can get the address of that DLL, along with `WSAStartup()` which is an API function needed for network operations.
 
 ```c
 
@@ -413,7 +413,7 @@ int main(int argc, char* argv[])
 
 ```
 
-We can refactor all of the WinAPIs used in the above code to become position indepent, similar to the example above with `WSAStartup`. Below is the code that’s been refactored to be position independent (final code, along with the header file containing the PEB structures can be found on my github [here](https://github.com/0xEct0/Shellcode-Generate/blob/main/code_templates/rev_shell.c) )
+We can refactor all of the WinAPIs used in the above code to become position indepent, similar to the example above with `WSAStartup`. Below is the code thatâ€™s been refactored to be position independent (final code, along with the header file containing the PEB structures can be found on my github [here](https://github.com/0xEcto/Shellcode-Generate/blob/main/code_templates/rev_shell.c) )
 
 ```c
 
